@@ -1,10 +1,4 @@
-function lives () {
-	
-}
 scene.onOverlapTile(SpriteKind.Player, sprites.builtin.brick, function (sprite, location) {
-	
-})
-sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
 	
 })
 let cherryTime = 0
@@ -113,27 +107,15 @@ Ghosty4.setPosition(280, 134)
 Ghosty4.setVelocity(38, 40)
 tiles.setCurrentTilemap(tilemap`level2`)
 controller.moveSprite(Player1, 100, 100)
-tiles.setTileAt(tiles.getTileLocation(3, 2), img`Cherry`)
-let mySprite = sprites.create(img`
-    . . . . . . . . . . . . . 
-    . . . . . . . . . . 7 . . 
-    . . . . . . 7 7 7 7 7 . . 
-    . 2 2 2 7 7 7 . . . 7 . . 
-    2 2 2 1 2 7 . . . 7 7 . . 
-    2 2 2 1 1 2 d 2 . 7 . . . 
-    2 2 2 1 2 d 2 2 2 7 . . . 
-    2 2 2 d d 2 2 2 2 2 . . . 
-    2 2 d 2 2 2 2 2 2 2 2 . . 
-    . d 2 2 2 2 2 2 2 1 2 . . 
-    . . d 2 2 2 2 2 2 2 2 . . 
-    . . . 2 2 2 2 2 2 2 . . . 
-    . . . . 2 2 2 2 2 . . . . 
-    `, SpriteKind.Food)
+tiles.setTileAt(tiles.getTileLocation(3, 2), assets.tile`CherryTile`)
 forever(function () {
-    if (tiles.tileAtLocationEquals(Player1.tilemapLocation(), assets.tile`transparency16`)) {
+    if (tiles.tileAtLocationEquals(Player1.tilemapLocation(), assets.tile`CherryTile`)) {
         tiles.setTileAt(Player1.tilemapLocation(), sprites.vehicle.roadHorizontal)
         cherryTime += 1
         info.setScore(info.score() + 1)
+        timer.after(10000, function () {
+            cherryTime += -1
+        })
     }
 })
 forever(function () {
