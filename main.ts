@@ -1,9 +1,15 @@
 function lives () {
 	
 }
+scene.onOverlapTile(SpriteKind.Player, sprites.builtin.brick, function (sprite, location) {
+	
+})
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
 	
 })
+let cherryTime = 0
+info.setLife(3)
+info.setScore(0)
 let Player1 = sprites.create(img`
     . . f f f f f f f f f . . 
     . f f 5 5 5 5 5 5 5 f f . 
@@ -107,6 +113,7 @@ Ghosty4.setPosition(280, 134)
 Ghosty4.setVelocity(38, 40)
 tiles.setCurrentTilemap(tilemap`level2`)
 controller.moveSprite(Player1, 100, 100)
+tiles.setTileAt(tiles.getTileLocation(3, 2), img`Cherry`)
 let mySprite = sprites.create(img`
     . . . . . . . . . . . . . 
     . . . . . . . . . . 7 . . 
@@ -122,3 +129,36 @@ let mySprite = sprites.create(img`
     . . . 2 2 2 2 2 2 2 . . . 
     . . . . 2 2 2 2 2 . . . . 
     `, SpriteKind.Food)
+forever(function () {
+    if (tiles.tileAtLocationEquals(Player1.tilemapLocation(), assets.tile`transparency16`)) {
+        tiles.setTileAt(Player1.tilemapLocation(), sprites.vehicle.roadHorizontal)
+        cherryTime += 1
+        info.setScore(info.score() + 1)
+    }
+})
+forever(function () {
+    if (Player1.overlapsWith(Ghosty_1) && cherryTime == 1) {
+        Ghosty_1.setPosition(200, 70)
+    } else if (Player1.overlapsWith(Ghosty_1) && cherryTime != 1) {
+        info.changeLifeBy(-1)
+        Player1.setPosition(40, 40)
+    }
+    if (Player1.overlapsWith(Ghosty2) && cherryTime == 1) {
+        Ghosty2.setPosition(280, 70)
+    } else if (Player1.overlapsWith(Ghosty2) && cherryTime != 1) {
+        info.changeLifeBy(-1)
+        Player1.setPosition(40, 40)
+    }
+    if (Player1.overlapsWith(Ghosty3) && cherryTime == 1) {
+        Ghosty3.setPosition(200, 134)
+    } else if (Player1.overlapsWith(Ghosty3) && cherryTime != 1) {
+        info.changeLifeBy(-1)
+        Player1.setPosition(40, 40)
+    }
+    if (Player1.overlapsWith(Ghosty4) && cherryTime == 1) {
+        Ghosty4.setPosition(280, 134)
+    } else if (Player1.overlapsWith(Ghosty4) && cherryTime != 1) {
+        info.changeLifeBy(-1)
+        Player1.setPosition(40, 40)
+    }
+})
