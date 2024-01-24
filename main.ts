@@ -1,23 +1,20 @@
 let Player1 = sprites.create(img`
-    ..................
-    ....fffffffff.....
-    ..fff5555555fff...
-    .ff55555555555ff..
-    .f5555555555555ff.
-    ff55ff5555555555f.
-    f555ff5555555555f.
-    f555ff5555555ffff.
-    f555ff5555ffff....
-    f55555555ff.......
-    f555555555fff.....
-    f55555555555fff...
-    f5555555555555fff.
-    ff55555555555555f.
-    .f5555555555555ff.
-    .ff55555555555ff..
-    ..fff5555555fff...
-    ....fffffffff.....
+    . . f f f f f f f f f . . 
+    . f f 5 5 5 5 5 5 5 f f . 
+    f f 5 5 5 5 5 5 5 5 5 f f 
+    f 5 5 f f 5 5 5 5 5 5 5 f 
+    f 5 5 f f 5 5 5 5 5 5 5 f 
+    f 5 5 f f 5 5 5 f f f f f 
+    f 5 5 f f 5 5 f f . . . . 
+    f 5 5 5 5 5 5 5 f f . . . 
+    f 5 5 5 5 5 5 5 5 f f f f 
+    f 5 5 5 5 5 5 5 5 5 5 5 f 
+    f f 5 5 5 5 5 5 5 5 5 f f 
+    . f f 5 5 5 5 5 5 5 f f . 
+    . . f f f f f f f f f . . 
     `, SpriteKind.Player)
+Player1.setPosition(40, 40)
+scene.cameraFollowSprite(Player1)
 let Ghosty_1 = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . 8 8 8 8 8 . . . . . 
@@ -36,6 +33,7 @@ let Ghosty_1 = sprites.create(img`
     . 8 8 8 . 8 8 8 . 8 8 8 . 8 8 8 
     . . 8 . . . 8 . . . 8 . . . 8 . 
     `, SpriteKind.Enemy)
+Ghosty_1.setPosition(randint(0, 10), randint(0, 10))
 let Ghosty2 = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . a a a a a . . . . . 
@@ -54,6 +52,7 @@ let Ghosty2 = sprites.create(img`
     . a a a . a a a . a a a . a a a 
     . . a . . . a . . . a . . . a . 
     `, SpriteKind.Enemy)
+Ghosty2.setPosition(randint(0, 10), randint(0, 10))
 let Ghosty3 = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . 2 2 2 2 2 . . . . . 
@@ -72,6 +71,7 @@ let Ghosty3 = sprites.create(img`
     . 2 2 2 . 2 2 2 . 2 2 2 . 2 2 2 
     . . 2 . . . 2 . . . 2 . . . 2 . 
     `, SpriteKind.Enemy)
+Ghosty3.setPosition(randint(0, 10), randint(0, 10))
 let Ghosty4 = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . 3 3 3 3 3 . . . . . 
@@ -90,4 +90,6 @@ let Ghosty4 = sprites.create(img`
     . 3 3 3 . 3 3 3 . 3 3 3 . 3 3 3 
     . . 3 . . . 3 . . . 3 . . . 3 . 
     `, SpriteKind.Enemy)
+Ghosty4.setPosition(randint(0, 10), randint(0, 10))
+tiles.setCurrentTilemap(tilemap`level2`)
 controller.moveSprite(Player1, 100, 100)
