@@ -1,6 +1,8 @@
-scene.onOverlapTile(SpriteKind.Player, sprites.builtin.brick, function (sprite, location) {
-	
-})
+function telport () {
+    if (true) {
+    	
+    }
+}
 let cherryTime = 0
 info.setLife(3)
 info.setScore(0)
