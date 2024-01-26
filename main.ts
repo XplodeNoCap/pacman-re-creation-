@@ -1,5 +1,9 @@
 scene.onOverlapTile(SpriteKind.Player, sprites.builtin.brick, function (sprite, location) {
-    new_location = tiles.getTilesByType(sprites.builtin.brick)._pickRandom()
+    if (!(teleportState)) {
+        new_location = tiles.getTilesByType(sprites.builtin.brick)._pickRandom()
+        tiles.placeOnTile(sprite, new_location.getNeighboringLocation(CollisionDirection.Left))
+        teleportState = true
+    }
 })
 function setupGhosts () {
     for (let value of GhostList) {
@@ -35,6 +39,7 @@ function Bluey () {
 }
 let cherryTime = 0
 let new_location: tiles.Location = null
+let teleportState = false
 let GhostList: Sprite[] = []
 let Player1: Sprite = null
 namespace userconfig{
@@ -69,5 +74,8 @@ forever(function () {
             reverseBluey()
         })
         tiles.setTileAt(tiles.getTilesByType(sprites.vehicle.roadHorizontal)._pickRandom(), assets.tile`Cherry`)
+    }
+    if (!(tiles.tileAtLocationEquals(Player1.tilemapLocation(), sprites.builtin.brick))) {
+        teleportState = false
     }
 })
