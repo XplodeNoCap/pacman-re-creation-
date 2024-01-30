@@ -5,15 +5,34 @@ scene.onOverlapTile(SpriteKind.Player, sprites.builtin.brick, function (sprite, 
         teleportState = true
     }
 })
-function setupGhosts () {
-    for (let value of GhostList) {
-        value.setBounceOnWall(true)
-        value.setVelocity(38, 40)
+function setupGhosts (value: Sprite) {
+    value.setBounceOnWall(true)
+    value.setVelocity(38, 40)
+    new_location = tiles.getTilesByType(sprites.vehicle.roadHorizontal)._pickRandom()
+    if (value.image.equals(assets.image`Dark blue`)) {
         new_location = tiles.getTilesByType(sprites.vehicle.roadHorizontal)._pickRandom()
-        while (Player1.x == new_location.x && Player1.y == new_location.y) {
+        while (Player1.tilemapLocation().column == new_location.column && Player1.tilemapLocation().row == new_location.row) {
             new_location = tiles.getTilesByType(sprites.vehicle.roadHorizontal)._pickRandom()
         }
-        value.setPosition(new_location.x, new_location.y)
+    } else if (value.image.equals(assets.image`Purple`)) {
+        new_location = tiles.getTilesByType(sprites.vehicle.roadVertical)._pickRandom()
+        while (Player1.tilemapLocation().column == new_location.column && Player1.tilemapLocation().row == new_location.row) {
+            new_location = tiles.getTilesByType(sprites.vehicle.roadVertical)._pickRandom()
+        }
+    } else if (value.image.equals(assets.image`Pink`)) {
+        new_location = tiles.getTilesByType(sprites.builtin.brick)._pickRandom()
+        while (Player1.tilemapLocation().column == new_location.column && Player1.tilemapLocation().row == new_location.row) {
+            new_location = tiles.getTilesByType(sprites.builtin.brick)._pickRandom()
+        }
+    } else {
+        new_location = tiles.getTilesByType(sprites.vehicle.roadTurn3)._pickRandom()
+        while (Player1.tilemapLocation().column == new_location.column && Player1.tilemapLocation().row == new_location.row) {
+            new_location = tiles.getTilesByType(sprites.vehicle.roadTurn3)._pickRandom()
+        }
+    }
+    value.setPosition(new_location.x, new_location.y)
+    if (distance(value, Player1) < 4 * 16) {
+        value.setImage(assets.image`Bluey`)
     }
 }
 sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Player, function (sprite, otherSprite) {
@@ -26,11 +45,17 @@ sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Player, function (sprite, otherSp
         Player1.setPosition(40, 40)
     }
 })
+function distance (sprite1: Sprite, sprite2: Sprite) {
+    return Math.sqrt((sprite1.x - sprite2.x) ** 2 + (sprite1.y - sprite2.y) ** 2)
+}
 function reverseBluey () {
     GhostList[0].setImage(assets.image`Dark blue`)
     GhostList[1].setImage(assets.image`Purple`)
     GhostList[2].setImage(assets.image`Red`)
     GhostList[3].setImage(assets.image`Pink`)
+}
+function pathLocations () {
+	
 }
 function Bluey () {
     for (let value2 of GhostList) {
@@ -58,7 +83,9 @@ sprites.create(assets.image`Red`, SpriteKind.Enemy),
 sprites.create(assets.image`Pink`, SpriteKind.Enemy)
 ]
 tiles.setCurrentTilemap(tilemap`level2`)
-setupGhosts()
+for (let value of GhostList) {
+    setupGhosts(value)
+}
 controller.moveSprite(Player1, 100, 100)
 for (let index = 0; index <= 2; index++) {
     tiles.setTileAt(tiles.getTilesByType(sprites.vehicle.roadHorizontal)._pickRandom(), assets.tile`Cherry`)
